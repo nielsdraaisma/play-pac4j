@@ -48,7 +48,7 @@ import play.mvc.Http.Session;
  * @since 2.1.0
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ Context.class, Request.class, PlayWebContext.class, SessionStore.class })
+@PrepareForTest({ Context.class, Request.class, PlayWebContext.class, SessionStore.class, RequestBody.class })
 public class PlayWebContextTest {
 
 	// Class under test

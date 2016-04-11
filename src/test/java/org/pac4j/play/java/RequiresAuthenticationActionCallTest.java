@@ -45,18 +45,19 @@ import org.pac4j.play.PlayWebContext;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import play.libs.F.Promise;
 import play.mvc.Http.Context;
 import play.mvc.Http.Request;
 import play.mvc.Result;
 
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CompletableFuture;
 /**
  * 
  * @author furkan yavuz
  * @since 2.1.0
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ Proxy.class, RequiresAuthenticationAction.class, Promise.class, IndirectClient.class })
+@PrepareForTest({ Proxy.class, RequiresAuthenticationAction.class, CompletionStage.class, IndirectClient.class })
 public class RequiresAuthenticationActionCallTest {
 
 	private RequiresAuthenticationAction requiresAuthenticationAction;
@@ -87,7 +88,7 @@ public class RequiresAuthenticationActionCallTest {
 	@Test
 	public final void testCall() throws Throwable {
 		// given
-		Promise<Result> resultMock = mock(Promise.class);
+		CompletionStage<Result> resultMock = mock(CompletionStage.class);
 		doReturn(resultMock).when(requiresAuthenticationAction).internalCall(contextMock, null, null);
 
 		mockStatic(Proxy.class);
@@ -95,7 +96,7 @@ public class RequiresAuthenticationActionCallTest {
 		Proxy.getInvocationHandler(null);
 
 		// when
-		Promise<Result> result = requiresAuthenticationAction.call(contextMock);
+		CompletionStage<Result> result = requiresAuthenticationAction.call(contextMock);
 
 		// then
 		assertEquals("Result must be equal to resultMock.", resultMock, result);
@@ -112,7 +113,7 @@ public class RequiresAuthenticationActionCallTest {
 		whenNew(ProfileManager.class).withAnyArguments().thenReturn(profileManagerMock);
 
 		// when
-		Promise<Result> result = requiresAuthenticationAction.internalCall(contextMock, null, null);
+		CompletionStage<Result> result = requiresAuthenticationAction.internalCall(contextMock, null, null);
 
 		// then
 		assertNotNull("Result must be set.", result);
@@ -121,7 +122,7 @@ public class RequiresAuthenticationActionCallTest {
 	@Test
 	public final void testForbidden() {
 		// given
-		mockStatic(Promise.class);
+		mockStatic(CompletableFuture.class);
 		PlayWebContext playWebContextMock = mock(PlayWebContext.class);
 
 		// when
@@ -129,13 +130,13 @@ public class RequiresAuthenticationActionCallTest {
 
 		// then
 		verifyStatic(atLeastOnce());
-        Promise.pure((Result) configMock.getHttpActionAdapter().adapt(HttpConstants.FORBIDDEN, playWebContextMock));
+		CompletableFuture.completedFuture((Result) configMock.getHttpActionAdapter().adapt(HttpConstants.FORBIDDEN, playWebContextMock));
 	}
 
 	@Test
 	public final void testUnauthorized() {
 		// given
-		mockStatic(Promise.class);
+		mockStatic(CompletableFuture.class);
 		PlayWebContext playWebContextMock = mock(PlayWebContext.class);
 
 		// when
@@ -143,7 +144,7 @@ public class RequiresAuthenticationActionCallTest {
 
 		// then
 		verifyStatic(atLeastOnce());
-		Promise.pure((Result) configMock.getHttpActionAdapter().adapt(HttpConstants.UNAUTHORIZED, playWebContextMock));
+		CompletableFuture.completedFuture((Result) configMock.getHttpActionAdapter().adapt(HttpConstants.UNAUTHORIZED, playWebContextMock));
 	}
 	
 	@SuppressWarnings("rawtypes")

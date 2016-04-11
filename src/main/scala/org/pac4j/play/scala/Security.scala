@@ -29,6 +29,7 @@ import play.core.j.JavaHelpers
 
 import _root_.scala.collection.JavaConverters
 import _root_.scala.concurrent.Future
+import scala.compat.java8.FutureConverters.CompletionStageOps;
 
 /**
  * <p>This trait adds security features to your Scala controllers.</p>
@@ -87,7 +88,7 @@ trait Security[P<:CommonProfile] extends Controller {
     val webContext = new PlayWebContext(request, config.getSessionStore)
     val requiresAuthenticationAction = new RequiresAuthenticationAction(config)
     val javaContext = webContext.getJavaContext
-    requiresAuthenticationAction.internalCall(javaContext, clientName, authorizerName).wrapped().flatMap[play.api.mvc.Result](r =>
+    requiresAuthenticationAction.internalCall(javaContext, clientName, authorizerName).toScala.flatMap[play.api.mvc.Result](r =>
       if (r == null) {
         var profile = javaContext.args.get(Pac4jConstants.USER_PROFILE).asInstanceOf[P]
         if (profile == null) {

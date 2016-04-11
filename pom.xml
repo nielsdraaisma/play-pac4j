@@ -21,8 +21,9 @@
     </parent>
 
     <groupId>org.pac4j</groupId>
-    <artifactId>play-pac4j</artifactId>
+    <artifactId>play-pac4j-play25</artifactId>
     <packaging>jar</packaging>
+
     <name>pac4j implementation for Play framework</name>
     <version>2.2.0-SNAPSHOT</version>
     <description>Security library for Play framework based on pac4j</description>
@@ -73,7 +74,7 @@
 
     <properties>
         <pac4j.version>1.8.6</pac4j.version>
-        <play.version>2.4.0</play.version>
+        <play.version>2.5.0</play.version>
         <powermock.version>1.6.4</powermock.version>
     </properties>
 
@@ -103,15 +104,21 @@
             </dependency>
             <dependency>
                 <groupId>com.typesafe.play</groupId>
-                <artifactId>play_2.10</artifactId>
+                <artifactId>play_2.11</artifactId>
                 <version>${play.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.typesafe.play</groupId>
-                <artifactId>play-cache_2.10</artifactId>
+                <artifactId>play-cache_2.11</artifactId>
                 <version>${play.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.scala-lang.modules</groupId>
+                <artifactId>scala-java8-compat_2.11</artifactId>
+                <version>0.7.0</version>
             </dependency>
 
             <dependency>

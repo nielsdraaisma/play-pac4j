@@ -117,7 +117,7 @@ public class ApplicationLogoutControllerTest {
 		
 		// then
 		assertEquals("Request have url parameter therefore logout must return result with 303 code", 303, result.status());
-		assertEquals("Location must be " + Pac4jConstants.DEFAULT_URL_VALUE, Pac4jConstants.DEFAULT_URL_VALUE, result.header("LOCATION"));
+		assertEquals("Location must be " + Pac4jConstants.DEFAULT_URL_VALUE, Pac4jConstants.DEFAULT_URL_VALUE, result.header("LOCATION").get());
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class ApplicationLogoutControllerTest {
 		
 		// then
 		assertEquals("Request have url parameter therefore logout must return result with 303 code", 303, result.status());
-		assertEquals("Location must be " + Pac4jConstants.DEFAULT_LOGOUT_URL_PATTERN_VALUE, Pac4jConstants.DEFAULT_LOGOUT_URL_PATTERN_VALUE, result.header("LOCATION"));
+		assertEquals("Location must be " + Pac4jConstants.DEFAULT_LOGOUT_URL_PATTERN_VALUE, Pac4jConstants.DEFAULT_LOGOUT_URL_PATTERN_VALUE, result.header("LOCATION").get());
 	}
 
 	@Test

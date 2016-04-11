@@ -125,7 +125,7 @@ public class CallbackControllerTest {
 		Result result = callbackController.callback();
 		
 		// then
-		assertEquals("Location must be equal to /", expected, result.header("Location"));
+		assertEquals("Location must be equal to /", expected, result.header("Location").get());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -153,7 +153,7 @@ public class CallbackControllerTest {
 		Result result = callbackController.redirectToOriginallyRequestedUrl(context);
 		
 		// then
-		assertEquals("Location must be equal to /", expected, result.header("Location"));
+		assertEquals("Location must be equal to /", expected, result.header("Location").get());
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class CallbackControllerTest {
 		Result result = callbackController.redirectToOriginallyRequestedUrl(context);
 		
 		// then
-		assertEquals("Location must be equal to " + expected, expected, result.header("Location"));
+		assertEquals("Location must be equal to " + expected, expected, result.header("Location").get());
 	}
 
 	@Test
